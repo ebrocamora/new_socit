@@ -11,7 +11,7 @@
   
   jobs:
     build:
-      runs-on: ubuntu-latest
+      runs-on: windows-latest
   
       steps:
         - uses: actions/checkout@v2
@@ -19,18 +19,18 @@
         - name: Setup PHP
           uses: shivammathur/setup-php@v2
           with:
-            php-version: '8.0'
+            php-version: '5.6'
             
         - name: Check if composer.json exists
           id: check_files
           uses: andstor/file-existence-action@v1
           with:
             files: "composer.json"
-  
+            
         - name: Run composer install if composer.json exists
           if: steps.check_files.outputs.files_exists == 'true'
           run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
-        
+  
         - name: Upload artifact for deployment job
           uses: actions/upload-artifact@v2
           with:
@@ -56,5 +56,5 @@
           with:
             app-name: 'socit-fest'
             slot-name: 'production'
-            publish-profile: ${{ secrets.AzureAppService_PublishProfile_ab5c0d7bc8074821b07726019e49947d }}
+            publish-profile: ${{ secrets.AzureAppService_PublishProfile_af82d0c5cd99459bb9ad021f3f7676e7 }}
             package: .
